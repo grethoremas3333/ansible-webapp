@@ -1,6 +1,13 @@
 - name: "Installation du Serveur Apache"
   hosts: prod
   pre_tasks:
+    - name: Installation de QQ paquets
+      package: name='{{ item }}' state=present
+      when: ansible_distribution == "Ubuntu"
+      loop:
+        - tree
+        - wget
+        - git
     - name: Installation de Docker
       apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
     - name: Installation des Packages requis pour le Systeme
@@ -21,11 +28,17 @@
     - name: Installation de Python dans Conteneur Docker
       pip: name=docker-py
   tasks:
+    - name: Copy website file Template
+      template:
+        src: index.html.j2
+        dest: /home/ansible_user/workspace/index.html
     - name: Creation du containeur Apache
       docker_container:
         name: serveur_apache
         image: httpd
         ports:
           - "24700:80"
+        volumes:
+          - /home/ansible_user/workspace/index.html:/usr/local/apache2/htdocs/index.html
     - name: Verification Container en Marche
       shell: 'curl http://172.31.4.70:24700'
