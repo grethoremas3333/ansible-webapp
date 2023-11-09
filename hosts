@@ -2,9 +2,6 @@ all:
   hosts:
     ansible_agent:
       ansible_host: 172.31.4.70
-      #ansible_ssh_user: ansible_user
-      #ansible_ssh_private_key_file: /home/ubuntu/ansible_agent1.pub
-      #ansible_sudo_pass: ansible
   children:
     prod:
       hosts:

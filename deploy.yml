@@ -1,5 +1,8 @@
 - name: "Installation du Serveur Apache"
   hosts: prod
+  become: true
+  vars_files:
+    - files/secrets/credentials.yml
   pre_tasks:
     - name: Installation de QQ paquets
       package: name='{{ item }}' state=present
