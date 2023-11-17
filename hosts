@@ -1,7 +1,7 @@
 all:
   hosts:
     ansible_agent:
-      ansible_host: 172.31.4.70
+      ansible_host: agent_ansible_un
   children:
     prod:
       hosts:
