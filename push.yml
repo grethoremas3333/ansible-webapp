@@ -1,0 +1,34 @@
+- name: "Git Clone And Push to GitHub Repositories"
+  hosts: prod
+  #pre_tasks:
+   # - name: "Initialisation"
+  tasks:
+    - name: "Clone GIT Repository"
+      ansible.builtin.git:
+        repo: "{{ src_repo }}"
+        dest: "{{ tmp_repo_directory }}"
+        clone: yes
+        update: yes
+    - name: "Copy New Files"
+      copy:
+        dest: "{{ tmp_repo_directory }}"
+        src: "{{ item }}"
+        force: true
+      loop:
+        - "{{ source_dir }}/PB1/"
+        - "{{ source_dir }}/PB2/"
+    - name: "Add output directory to git"
+      ansible.builtin.shell: |
+        git config --global user.name "gregoire thomas"
+        git config --global user.email "grethoremas@gmail.com"
+        git add -A && git commit -m "Automated Commit by Ansible" && git push
+      args:
+        chdir: "{{ tmp_repo_directory }}"
+      ignore_errors: true
+  vars:
+    src_repo: https://github.com/grethoremas3333/ansible-webapp.git
+    dest_repo: https://github.com/grethoremas3333/ansible-webapp.git
+    dest_branch: main
+    tmp_repo_directory: /home/ansible_agent_un/GIT2
+    source_dir: /home/ansible_server/PlayBook
+    tower_job_id: v1.0.0

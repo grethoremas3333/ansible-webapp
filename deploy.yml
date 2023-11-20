@@ -1,0 +1,28 @@
+- name: "Git Clone And Push to GitHub Repositories"
+  hosts: prod
+  #pre_tasks:
+   # - name: "Initialisation"
+  tasks:
+    - name: "Clone the source repository"
+      git:
+        repo: "{{ src_repo }}"
+        dest: /home/ansible_agent_un/ansible/workspace
+        clone: yes
+        update: yes
+        force: yes
+        #register: clone_result
+    - name: "Push the updates to the destination repository"
+      git:
+        repo: /home/ansible_agent_un/ansible/workspace
+        dest: "{{ dest_repo }}"
+        push: yes
+        #push_option: force
+        refspec: "+refs/heads/main:refs/heads/{{ dest_branch }}"
+        #register: push_result
+    #- name: "Display the clone and push results"
+    #  debug:
+    #    msg: "Cloned {{ clone_result.after }} from {{ src_repo }} and pushed to {{ dest_repo }} on branch {{ dest_branch }}"
+  vars:
+    src_repo: https://github.com/grethoremas3333/ansible-webapp.git
+    dest_repo: https://github.com/grethoremas3333/ansible-webapp.git
+    dest_branch: main
