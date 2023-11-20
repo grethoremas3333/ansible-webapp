@@ -1,7 +1,7 @@
 - name: "Git Clone And Push to GitHub Repositories"
   hosts: prod
   #pre_tasks:
-   # - name: "Initialisation"
+   # - name: "Creer une rsa_key sur l'hote && ajouter dans GitHub"
   tasks:
     - name: "Clone GIT Repository"
       ansible.builtin.git:
@@ -22,7 +22,7 @@
         git config --global user.name "gregoire thomas"
         git config --global user.email "grethoremas@gmail.com"
         git add .
-        git commit -m "MAJ Automated By Ansible"
+        git commit -m "Update Files {{ tower_job_id }}: Automated Commit by Ansible"
         git push -u origin main
       args:
         chdir: "{{ tmp_repo_directory }}"

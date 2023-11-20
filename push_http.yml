@@ -23,7 +23,7 @@
         git config --global user.email "grethoremas@gmail.com"
         git --version
         git add .
-        git commit -m "MAJ Automated By Ansible"
+        git commit -m "Update Files {{ tower_job_id }}: Automated Commit by Ansible"
         git push -u origin main
       args:
         chdir: "{{ tmp_repo_directory }}"
