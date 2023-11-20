@@ -21,14 +21,16 @@
       ansible.builtin.shell: |
         git config --global user.name "gregoire thomas"
         git config --global user.email "grethoremas@gmail.com"
-        git add -A && git commit -m "Automated Commit by Ansible" && git push
+        git --version
+        git add .
+        git commit -m "MAJ Automated By Ansible"
+        git push -u origin main
       args:
         chdir: "{{ tmp_repo_directory }}"
-      ignore_errors: true
   vars:
     src_repo: https://github.com/grethoremas3333/ansible-webapp.git
     dest_repo: https://github.com/grethoremas3333/ansible-webapp.git
     dest_branch: main
-    tmp_repo_directory: /home/ansible_agent_un/GIT2
+    tmp_repo_directory: /home/ansible_agent_un/GIT
     source_dir: /home/ansible_server/PlayBook
     tower_job_id: v1.0.0
